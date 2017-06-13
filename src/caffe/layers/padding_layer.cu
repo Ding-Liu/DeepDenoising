@@ -1,0 +1,76 @@
+#include <vector>
+
+#include "caffe/layers/padding_layer.hpp"
+#include "caffe/util/math_functions.hpp"
+
+namespace caffe {
+
+template <typename Dtype>
+void PaddingLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top) {
+  const Dtype* bottom_data = bottom[0]->gpu_data();
+  Dtype* top_data = top[0]->mutable_gpu_data();
+
+  // top[n, c, h, w] = bottom[n, c, h-pad_beg, w-pad_beg] if in range
+  if (pad_pos_) {
+    caffe_gpu_set(top[0]->count(), Dtype(0), top[0]->mutable_gpu_data());
+    for (int n = 0; n < num_; ++n) {
+      for (int c = 0; c < channels_; ++c) {
+  CUDA_CHECK(cudaMemcpy2D(
+      top_data + top[0]->offset(n, c, pad_beg_, pad_beg_), sizeof(Dtype) * width_out_,
+      bottom_data + bottom[0]->offset(n, c, 0, 0), sizeof(Dtype) * width_in_,
+      sizeof(Dtype) * width_in_, height_in_,
+      cudaMemcpyDeviceToDevice));
+      }
+    }
+  }
+  else {
+    for (int n = 0; n < num_; ++n) {
+      for (int c = 0; c < channels_; ++c) {
+  CUDA_CHECK(cudaMemcpy2D(
+      top_data + top[0]->offset(n, c, 0, 0), sizeof(Dtype) * width_out_,
+      bottom_data + bottom[0]->offset(n, c, - pad_beg_, - pad_beg_), sizeof(Dtype) * width_in_,
+      sizeof(Dtype) * width_out_, height_out_,
+      cudaMemcpyDeviceToDevice));
+      }
+    }
+  }
+}
+
+template <typename Dtype>
+void PaddingLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom) {
+  const Dtype* top_diff = top[0]->gpu_diff();
+  Dtype* bottom_diff = bottom[0]->mutable_gpu_diff();
+
+  if (!propagate_down[0]) { return; }
+  caffe_gpu_set(bottom[0]->count(), Dtype(0), bottom[0]->mutable_gpu_diff());
+  if (pad_pos_) {
+    for (int n = 0; n < num_; ++n) {
+      for (int c = 0; c < channels_; ++c) {
+  for (int h = 0; h < height_in_; ++h) {
+    // copy the width part
+    caffe_gpu_axpy(width_in_, (Dtype)1.,
+       top_diff + top[0]->offset(n, c, h + pad_beg_, pad_beg_),
+       bottom_diff + bottom[0]->offset(n, c, h, 0));
+  }
+      }
+    }
+  }
+  else {
+    for (int n = 0; n < num_; ++n) {
+      for (int c = 0; c < channels_; ++c) {
+  for (int h = 0; h < height_out_; ++h) {
+    // copy the width part
+    caffe_gpu_axpy(width_out_, (Dtype)1.,
+       top_diff + top[0]->offset(n, c, h, 0),
+       bottom_diff + bottom[0]->offset(n, c, h - pad_beg_, - pad_beg_));
+  }
+      }
+    }
+  }
+}
+
+INSTANTIATE_LAYER_GPU_FUNCS(PaddingLayer);
+
+}  // namespace caffe

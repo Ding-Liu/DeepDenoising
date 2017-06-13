@@ -1,0 +1,22 @@
+train_net: "config/train_seg.prototxt"
+
+lr_policy: "step"
+gamma: 0.2
+stepsize: 12000
+base_lr: 1e-3 #1e-4
+#base_lr: 0
+
+#lr_policy: "poly"
+#power: 0.9
+#base_lr: 1e-3 #1e-3
+
+display: 100
+max_iter: 60000
+momentum: 0.9
+weight_decay: 0.0005
+
+snapshot: 5000
+snapshot_prefix: "model/seg_joint/train_joint"
+solver_mode: GPU
+#debug_info: true
+

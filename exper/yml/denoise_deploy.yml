@@ -1,0 +1,16 @@
+FLATTEN: False
+IMG_MEAN: [104, 117, 123]
+#IMG_MEAN: [104.008, 116.669, 122.675]
+TEST:
+  NETWORK_NAME: "res_denoise"
+  NETWORK_FN: 'prototxt/deploy_denoise.prototxt'
+  MODEL_FN: 'model/denoise-s30.caffemodel'
+  DEVICE: 'GPU'
+  DEVICE_ID: 0
+  STRIDE: 64
+  BLOCK_SIZE: [134, 134]
+  MAX_BATCH_SIZE: 4
+SAMPLING:
+  CONV_CROP: 3
+SCALE: 1.0  # input scale: 255 / SCALE (255.0 or 1.0)
+

@@ -1,0 +1,22 @@
+#IMAGE_LIST: '/ws/ifp-06_1/dingliu2/deeplab-public-ver2/exper/voc12/list/val.txt'
+IMAGE_LIST: 'list/val_noisy_sigma30.txt'
+IMG_ROOT: '/your/path/to/noisy/Pascal_VOC2012/'
+IMG_MEAN: [104.008, 116.669, 122.675]  # [B, G, R]
+GAUSSIAN_SIGMA: 0.0
+FLATTEN: False
+NOISE_TYPE: ['gaussian']
+SAMPLING:
+  IMG_PER_BATCH: 1
+  BATCH_SIZE: 1
+#  BLOCK_SIZE: [513, 513]
+  BLOCK_SIZE: [500, 500]
+  CONV_CROP: 0
+CLS_LABEL: False
+ORIGINAL_IMG_LABEL: False
+DEC_IMG: True  # False: read image as string into memory, to save memory
+SCALE: 1.0  # input scale: 255 / SCALE
+IMG_MIRROR: False
+FORCE_COLOR: True
+DATA_TYPE: 'MAT' # 'MAT'
+TASK_TYPE: 'SEGMENTATION'
+SHUFFLE: False

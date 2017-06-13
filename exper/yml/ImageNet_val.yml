@@ -1,0 +1,21 @@
+#IMAGE_LIST: 'data/ImageNet_val_short.txt'
+#IMG_ROOT: 'data/ImageNet_val_images'
+IMAGE_LIST: '/your/path/to/noisy/val_mat.txt'
+IMG_ROOT: '/your/path/to/noisy/imageNetVal/'
+IMG_MEAN: [104, 117, 123]  # [B, G, R]
+GAUSSIAN_SIGMA: 0.0
+FLATTEN: False
+NOISE_TYPE: ['gaussian']
+SAMPLING:
+  IMG_PER_BATCH: 10
+  BATCH_SIZE: 10
+#  BLOCK_SIZE: [224, 224]
+  BLOCK_SIZE: [232, 232]
+  CONV_CROP: 0
+CLS_LABEL: True
+ORIGINAL_IMG_LABEL: False
+DEC_IMG: True  # False: read image as string into memory, to save memory
+SCALE: 1.0  # input scale: 255 / SCALE
+IMG_MIRROR: False
+FORCE_COLOR: True
+DATA_TYPE: 'MAT' # 'MAT'

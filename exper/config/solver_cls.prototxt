@@ -1,0 +1,23 @@
+train_net: 'config/train_cls.prototxt'
+#test_net: 'prototxt/joint/test_joint.pt'
+#test_iter: 2
+#test_iter: 6250
+#test_interval: 200000
+#test_initialization: true  # initial testing run
+#test_compute_loss: false
+base_lr: 0.00001
+#base_lr: 0
+#lr_policy: "fixed"
+lr_policy: "step"
+gamma: 0.1
+stepsize: 80000
+display: 500
+average_loss: 1000
+max_iter: 180000
+momentum: 0.9
+weight_decay: 0.0005
+snapshot: 20000
+snapshot_prefix: "model/cls_joint/train_joint"
+solver_mode: GPU
+# clip_gradients: 100
+# debug_info: true
