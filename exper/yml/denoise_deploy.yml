@@ -3,7 +3,7 @@ IMG_MEAN: [104, 117, 123]
 #IMG_MEAN: [104.008, 116.669, 122.675]
 TEST:
   NETWORK_NAME: "res_denoise"
-  NETWORK_FN: 'prototxt/deploy_denoise.prototxt'
+  NETWORK_FN: 'config/deploy_denoise.prototxt'
   MODEL_FN: 'model/denoise-s30.caffemodel'
   DEVICE: 'GPU'
   DEVICE_ID: 0

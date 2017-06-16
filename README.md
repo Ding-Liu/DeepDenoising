@@ -25,8 +25,7 @@ For more details, please refer to our [paper](https://arxiv.org/abs/1706.04284).
 - `cd exper`
 - Run `main_test_cls.sh` to test the resulting model for image classification.
 - Run `main_test_seg.sh` to test the resulting model for semantic segmentation.
-- `cd exper/tools/`
-- Use `deepdenoising.py` to generate denoised results.
+- Run `main_test_denoise.sh` to generate denoised results.
 
 ## Citation
 Please cite the paper in your publications if it helps your research:
