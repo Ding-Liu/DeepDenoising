@@ -105,10 +105,10 @@ class BaseImageVariationLayer(caffe.Layer):
             top[i].reshape(*(blob[i].shape))
 
     def reshape(self, bottom, top):
-        pass
-        # blob = self.get_next_minibatch()
-        # for i in range(len(blob)):
-        #     top[i].reshape(*(blob[i].shape))
+        blob = self.get_next_minibatch()
+        for i in range(len(blob)):
+            top[i].reshape(*(blob[i].shape))
+        self._blob = blob
 
     def load_image_list(self):
         """Load image list from cfg.IMAGE_LIST and cfg.IMG_ROOT"""
@@ -315,7 +315,8 @@ class BaseImageVariationLayer(caffe.Layer):
         pass
 
     def forward(self, bottom, top):
-        blob = self.get_next_minibatch()
+        # blob = self.get_next_minibatch()
+        blob = self._blob
         for i in range(len(blob)):
             top[i].reshape(*blob[i].shape)
             top[i].data[...] = blob[i].astype(np.float32, copy=False)
