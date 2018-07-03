@@ -30,9 +30,9 @@ For more details, please refer to our [paper](https://arxiv.org/abs/1706.04284).
 ## Citation
 Please cite the paper in your publications if it helps your research:
 
-    @inproceedings{liu2017when,
-      author = {Liu, Ding and Wen, Bihan and Liu, Xianming and Huang, Thomas S.},
+    @inproceedings{liu2018when,
+      author = {Liu, Ding and Wen, Bihan and Liu, Xianming and Wang, Zhangyang and Huang, Thomas S.},
       title = {When Image Denoising Meets High-Level Vision Tasks: A Deep Learning Approach},
-      year = {2017},
-      journal={arXiv preprint arXiv:1706.04284}
+      booktitle={IJCAI},
+      year = {2018}
       }
